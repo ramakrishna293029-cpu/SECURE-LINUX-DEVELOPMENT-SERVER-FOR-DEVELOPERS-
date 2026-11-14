@@ -47,16 +47,9 @@ SECURE-LINUX-DEVELOPMENT-SERVER-FOR-DEVELOPERS/
 │   ├── test_dashboard_api.py          # FastAPI TestClient integration tests and whitespace resilience
 │   └── test_generate_ppt.py           # Presentation deck structure and slide count validation
 │
-├── docs/                               # Comprehensive project documentation and academic artifacts
-│   ├── PROJECT_DOCUMENTATION.md       # Detailed technical design specification (CO1-CO5 deep dive)
-│   ├── DevCompany_Linux_Hackathon.pptx# 15-slide automated technical presentation deck
-│   ├── generate_ppt.py                # Python script generating the presentation deck
-│   ├── build_report.py                # Automated documentation and report generator
-│   ├── generate_architecture_diagram.py # Generates high-resolution architecture diagrams
-│   ├── generate_screenshots.py        # Generates clean, authentic terminal verification evidence
-│   ├── Linux Hackathon Report.docx    # Formal comprehensive academic project report (Word)
-│   ├── Linux Hackathon Report.pdf     # Formal comprehensive academic project report (PDF)
-│   └── report_images/                 # Embedded graphic figures and terminal verification captures
+├── docs/                               # Comprehensive project documentation and evaluation artifacts
+│   ├── Linux_Hackathon_Report.pdf     # 24-page comprehensive project deployment report (PDF)
+│   └── Linux_Hackathon_Presentation.pdf # 15-slide technical presentation deck (PDF)
 │
 └── screenshots/                        # Cataloged visual evidence for GitHub and evaluation
     ├── 01_architecture_diagram.png    # High-resolution system architecture blueprint
@@ -146,9 +139,8 @@ Guarantees code quality, syntax correctness, and system stability through 45 aut
 ---
 
 ### 6. Evidence & Documentation (`docs/` & `screenshots/`) (Role 4)
-Provides an exhaustive audit trail, visual verification evidence, and academic evaluation artifacts.
+Provides an exhaustive audit trail, visual verification evidence, and evaluation artifacts.
 
-- **`docs/PROJECT_DOCUMENTATION.md`:** Comprehensive 150+ line technical report detailing system architecture, Course Outcome (CO1–CO5) mapping, command syntax explanations, and testing checklists.
-- **`docs/DevCompany_Linux_Hackathon.pptx`:** Professional 15-slide presentation deck generated automatically via `generate_ppt.py`.
-- **`docs/Linux Hackathon Report.docx` & `.pdf`:** 24-page formal academic report formatted according to university standards, complete with double-line page borders, running headers, verification matrices, and embedded terminal figures.
+- **`docs/Linux_Hackathon_Report.pdf`:** 24-page formal comprehensive academic project report detailing system architecture, Course Outcome (CO1–CO5) mapping, command syntax explanations, and testing checklists.
+- **`docs/Linux_Hackathon_Presentation.pdf`:** Professional 15-slide presentation deck covering Problem Statement #4, architectural topology, implementation details, testing results, and roadmaps.
 - **`screenshots/`:** Contains 18 high-resolution PNG verification images covering every subsystem, from initial user provisioning and LVM volume creation to the live Web Command Center and end-to-end automated audit results.

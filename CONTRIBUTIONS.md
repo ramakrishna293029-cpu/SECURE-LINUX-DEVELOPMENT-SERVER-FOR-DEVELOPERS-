@@ -158,7 +158,7 @@ This document presents a structured contribution matrix for the four assigned pr
 - `dashboard/app.py`: Asynchronous FastAPI backend providing REST APIs and Server-Sent Events script runners.
 - `dashboard/templates/index.html` & `dashboard/static/app.js`: Glassmorphic, dark-mode DevOps command center with Chart.js live graphs, sticky tables, and terminal action console.
 - `systemd/devcompany-dashboard.service`: Systemd service unit managing Uvicorn on port `8080`.
-- Documentation artifacts: `README.md`, `TEAM_ROLES.md`, `CONTRIBUTIONS.md`, `PROJECT_STRUCTURE.md`, `docs/PROJECT_DOCUMENTATION.md`, `docs/DevCompany_Linux_Hackathon.pptx`.
+- Documentation artifacts: `README.md`, `TEAM_ROLES.md`, `CONTRIBUTIONS.md`, `PROJECT_STRUCTURE.md`, `docs/Linux_Hackathon_Report.pdf`, `docs/Linux_Hackathon_Presentation.pdf`.
 
 #### 3. Implemented Technical Functionality
 - **Automated Verification Suite:** 25 assertion checks evaluating packages, services, LVM, accounts, SSH keys, password aging, sudoers policies, Git SGID, ACLs, and backup integrity, yielding 0 failures.
@@ -180,4 +180,4 @@ This document presents a structured contribution matrix for the four assigned pr
 | **Verify Live Telemetry API Endpoint** | `curl -sf http://127.0.0.1:8080/api/telemetry | python3 -m json.tool` | Returns valid JSON with live CPU%, memory, disks, and top processes without tracebacks. |
 | **Verify Developer Filtering Endpoint** | `curl -sf "http://127.0.0.1:8080/api/developers?team=frontend" | jq .total` | Returns: `12`. |
 | **Verify Systemd Dashboard Service** | `sudo systemctl status devcompany-dashboard --no-pager` | Shows `Active: active (running)` with Uvicorn worker listening on port `8080`. |
-| **Verify Presentation Generation** | `python docs/generate_ppt.py` | Generates 15-slide PowerPoint deck `docs/DevCompany_Linux_Hackathon.pptx`. |
+| **Verify Documentation Artifacts** | `ls -la docs/*.pdf` | Verifies `Linux_Hackathon_Report.pdf` (24 pages) and `Linux_Hackathon_Presentation.pdf` (15 slides). |

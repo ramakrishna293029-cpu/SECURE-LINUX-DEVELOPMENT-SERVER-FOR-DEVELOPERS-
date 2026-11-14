@@ -139,9 +139,8 @@ The **Testing Documentation & Presentation Lead** owns quality assurance, automa
   - `TEAM_ROLES.md`
   - `CONTRIBUTIONS.md`
   - `PROJECT_STRUCTURE.md`
-  - `docs/PROJECT_DOCUMENTATION.md`
-  - `docs/DevCompany_Linux_Hackathon.pptx` (and generator `docs/generate_ppt.py`)
-  - Formal academic project report (`Linux Hackathon Report.docx` and `.pdf`)
+  - `docs/Linux_Hackathon_Report.pdf`
+  - `docs/Linux_Hackathon_Presentation.pdf`
 
 #### Owned Modules & Files
 - `scripts/99_verify_and_demo.sh`
