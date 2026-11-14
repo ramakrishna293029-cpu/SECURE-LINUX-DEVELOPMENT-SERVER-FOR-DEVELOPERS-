@@ -1,13 +1,13 @@
 # Repository Architecture & Technical Structure
 
-This document provides a comprehensive technical overview of the **DevCompany Linux Server Infrastructure** repository layout. It explains the functional role of each file and directory, mapping each component to its respective system layer and assigned engineering role.
+This document provides a comprehensive technical overview of the **SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard** repository layout. It explains the functional role of each file and directory, mapping each component to its respective system layer and assigned engineering role.
 
 ---
 
 ## Directory Tree Overview
 
 ```text
-DevCompany-Linux-Infrastructure/
+SECURE-LINUX-DEVELOPMENT-SERVER-FOR-DEVELOPERS/
 ├── README.md                           # Master project guide, architecture, deployment, and testing
 ├── TEAM_ROLES.md                       # Role definitions and technical ownership boundaries
 ├── CONTRIBUTIONS.md                    # Role-wise contribution matrix and exact verification commands

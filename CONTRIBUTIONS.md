@@ -1,6 +1,6 @@
 # Role-Wise Contribution Matrix & Verification Guide
 
-This document presents a structured contribution matrix for the four assigned project roles in the **DevCompany Linux Server Infrastructure** project. Each section details the operational responsibilities, technical deliverables, implemented features, exact verification commands, and expected verification results.
+This document presents a structured contribution matrix for the four assigned project roles in the **SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard** project. Each section details the operational responsibilities, technical deliverables, implemented features, exact verification commands, and expected verification results.
 
 ---
 

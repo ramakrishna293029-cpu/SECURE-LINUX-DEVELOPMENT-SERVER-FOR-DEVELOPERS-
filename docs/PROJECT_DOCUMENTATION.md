@@ -1,4 +1,4 @@
-# Software Development Company Infrastructure — Academic Project Documentation
+# SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard — Academic Project Documentation
 
 **Problem Statement #4:** Design, automate, secure, monitor, and manage a multi-team Linux server infrastructure supporting 40 software engineers across four departments (`frontend`, `backend`, `devops`, `techleads`), backed by dynamically resizable LVM storage, integrity-verified backups, automated cron housekeeping, and a live Web Admin Command Center.
 

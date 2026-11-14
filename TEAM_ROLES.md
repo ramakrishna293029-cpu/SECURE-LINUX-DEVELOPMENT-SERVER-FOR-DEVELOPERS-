@@ -1,6 +1,6 @@
 # Team Roles & System Ownership Matrix
 
-This document outlines the four specialized engineering roles defined for the **DevCompany Linux Server Infrastructure (40 Developers)** project. It details the operational responsibilities, technical scope, and specific module ownership associated with each role.
+This document outlines the four specialized engineering roles defined for the **SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard** project. It details the operational responsibilities, technical scope, and specific module ownership associated with each role.
 
 ---
 
@@ -8,7 +8,7 @@ This document outlines the four specialized engineering roles defined for the **
 
 ```
 +---------------------------------------------------------------------------------------------------+
-|                        DEVCOMPANY LINUX INFRASTRUCTURE ROLE ARCHITECTURE                          |
+|                        ROLE ARCHITECTURE & SYSTEM SCOPE MATRIX                                    |
 +---------------------------------------------------------------------------------------------------+
 |                                                                                                   |
 |  [ROLE 1: Linux System Administrator]                                                             |

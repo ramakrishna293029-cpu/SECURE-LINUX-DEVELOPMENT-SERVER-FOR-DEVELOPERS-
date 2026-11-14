@@ -247,13 +247,13 @@ def build_presentation(
     top_band.fill.fore_color.rgb = CYAN
     top_band.line.fill.background()
 
-    badge = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.1), Inches(5.3), Inches(0.45))
+    badge = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.8), Inches(1.1), Inches(6.8), Inches(0.45))
     badge.adjustments[0] = 0.25
     badge.fill.solid()
     badge.fill.fore_color.rgb = RGBColor(0x11, 0x2B, 0x3C)
     badge.line.color.rgb = CYAN
     p_b = badge.text_frame.paragraphs[0]
-    p_b.text = "LINUX SYSTEM ADMINISTRATION HACKATHON  |  PROBLEM #4"
+    p_b.text = "PROBLEM #4: SOFTWARE DEVELOPMENT COMPANY INFRASTRUCTURE"
     p_b.alignment = PP_ALIGN.CENTER
     p_b.font.name = FONT_HEAD
     p_b.font.size = Pt(12)
@@ -264,17 +264,17 @@ def build_presentation(
     tf1 = title_tb.text_frame
     tf1.word_wrap = True
     p1 = tf1.paragraphs[0]
-    p1.text = "Software Development Company Infrastructure"
+    p1.text = "SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS"
     p1.font.name = FONT_HEAD
-    p1.font.size = Pt(40)
+    p1.font.size = Pt(36)
     p1.font.bold = True
     p1.font.color.rgb = TEXT_PRIMARY
 
     p2 = tf1.add_paragraph()
-    p2.text = "Automated Multi-Team Linux Server Provisioning, Loopback LVM Storage, RBAC Security & Real-Time DevOps Command Center"
+    p2.text = "with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard"
     p2.font.name = FONT_HEAD
     p2.font.size = Pt(17)
-    p2.font.color.rgb = TEXT_BODY
+    p2.font.color.rgb = CYAN
     p2.space_before = Pt(10)
 
     add_card(

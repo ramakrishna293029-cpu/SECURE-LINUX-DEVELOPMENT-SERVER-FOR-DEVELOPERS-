@@ -1,4 +1,4 @@
-# DevCompany Linux Infrastructure — Secure Multi-Tenant Linux Development Server for 40 Developers
+# SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard
 
 [![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04%20LTS-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com/)
 [![Bash](https://img.shields.io/badge/Bash-5.0+-4EAA25?logo=gnu-bash&logoColor=white)](https://www.gnu.org/software/bash/)
@@ -37,7 +37,7 @@ An enterprise-grade, fully automated, resilient Linux development server infrast
 
 ## 1. Project Title & Overview
 
-**DevCompany Linux Infrastructure** delivers a complete, production-ready Linux server environment designed from the ground up to eliminate manual configuration errors, prevent permission disputes, guarantee disk space elasticity, and maintain zero-trust security across multi-disciplinary engineering teams.
+**SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard** delivers a complete, production-ready Linux server environment designed from the ground up to eliminate manual configuration errors, prevent permission disputes, guarantee disk space elasticity, and maintain zero-trust security across multi-disciplinary engineering teams.
 
 Every infrastructure component is managed through modular, idempotent Bash scripts, persistent systemd services, and declarative configuration files. A centralized **FastAPI Web Admin Command Center** provides engineering managers, system administrators, and team leads with live kernel telemetry, interactive user directories, repository permission inspection, backup checksum validation, and real-time administrative script execution via Server-Sent Events (SSE).
 
@@ -75,7 +75,7 @@ This project satisfies all five core Linux System Administration Course Outcomes
 
 The following diagram illustrates the complete infrastructure topology, showing how 40 developer accounts authenticate, collaborate on shared repositories, utilize LVM storage volumes, execute automated maintenance tasks, and surface telemetry to the Web Command Center:
 
-![DevCompany Linux Infrastructure Architecture](screenshots/01_architecture_diagram.png)
+![SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS Architecture](screenshots/01_architecture_diagram.png)
 
 ### Architectural Flow & Separation of Concerns
 

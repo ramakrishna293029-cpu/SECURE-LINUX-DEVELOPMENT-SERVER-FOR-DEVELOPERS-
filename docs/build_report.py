@@ -200,7 +200,7 @@ add_p("Linux System Administration (E1ITA307)", align=WD_ALIGN_PARAGRAPH.CENTER,
 add_p("Linux Infrastructure Deployment Project Report", align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, size=12.5, space_after=3)
 add_p("On", align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, size=12.5, space_after=14)
 
-add_p("SECURE ENTERPRISE LINUX DEVELOPMENT SERVER FOR 40 DEVELOPERS WITH LVM STORAGE, SHARED REPOSITORIES, AUTOMATED CLEANUP, AND TELEMETRY DASHBOARD",
+add_p("SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS WITH LVM STORAGE, SHARED REPOSITORIES, AUTOMATED CLEANUP, AND TELEMETRY DASHBOARD",
       align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, size=13.5, space_after=18)
 
 add_p("Submitted by", align=WD_ALIGN_PARAGRAPH.CENTER, size=12.0, space_after=6)
@@ -236,7 +236,7 @@ add_p("ALLIANCE SCHOOL OF ADVANCED COMPUTING", align=WD_ALIGN_PARAGRAPH.CENTER, 
 add_p("CERTIFICATE", align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, size=14.0, space_after=20)
 
 cert_text = (
-    "This is to certify that the Project work entitled “Secure Enterprise Linux Development Server for 40 Developers "
+    "This is to certify that the Project work entitled “SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS "
     "with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard” submitted by the DevCompany "
     "Infrastructure Project Team (Role 1: Linux System Administrator, Role 2: Storage & Backup Administrator, "
     "Role 3: Automation & Security Engineer, Role 4: Testing Documentation & Presentation Lead) in partial fulfillment "

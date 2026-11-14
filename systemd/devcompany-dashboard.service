@@ -1,5 +1,5 @@
 [Unit]
-Description=DevCompany Linux Infrastructure Command Center Dashboard
+Description=SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard
 After=network-online.target local-fs.target devcompany-lvm-loop.service
 Wants=network-online.target
 

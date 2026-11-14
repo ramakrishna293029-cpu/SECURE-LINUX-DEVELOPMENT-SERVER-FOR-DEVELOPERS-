@@ -1,4 +1,4 @@
-"""DevCompany Linux Infrastructure Command Center (FastAPI Backend)."""
+"""SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard."""
 
 from __future__ import annotations
 
@@ -658,7 +658,7 @@ def create_app(config: InfraConfig | None = None) -> FastAPI:
     dashboard_dir = Path(__file__).resolve().parent
     history: deque[dict[str, Any]] = deque(maxlen=30)
 
-    app = FastAPI(title="DevCompany Linux Infrastructure Command Center", version="1.0.0")
+    app = FastAPI(title="SECURE LINUX DEVELOPMENT SERVER FOR DEVELOPERS with LVM Storage, Shared Repositories, Automated Cleanup, and Telemetry Dashboard", version="1.0.0")
     static_dir = dashboard_dir / "static"
     if static_dir.is_dir():
         app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
