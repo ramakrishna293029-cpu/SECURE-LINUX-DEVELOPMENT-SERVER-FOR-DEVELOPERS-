@@ -1,0 +1,16 @@
+[Unit]
+Description=Attach DevCompany Loopback Disks and Activate LVM Volume Group
+DefaultDependencies=no
+After=systemd-remount-fs.service local-fs-pre.target
+Before=local-fs.target lvm2-activation-early.service lvm2-activation.service
+ConditionPathExistsGlob=/var/lvm_disks/disk*.img
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/devcompany-attach-lvm.sh
+ExecStop=/bin/true
+TimeoutStartSec=30
+
+[Install]
+WantedBy=local-fs-pre.target multi-user.target

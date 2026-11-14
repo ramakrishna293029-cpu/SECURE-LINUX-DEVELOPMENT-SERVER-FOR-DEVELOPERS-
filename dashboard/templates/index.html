@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevCompany Linux Infrastructure Command Center</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #060913;
+      --card-bg: rgba(12, 19, 34, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 50% 0%, rgba(30, 41, 59, 0.35) 0%, rgba(6, 9, 19, 1) 75%), #060913;
+      background-attachment: fixed;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+    code, pre, .font-mono {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070b14; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+    /* Enterprise Glass & Glowing Top Accents */
+    .glass-panel {
+      background: rgba(12, 19, 34, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .card-accent-cyan {
+      border-top: 2px solid #06b6d4 !important;
+      box-shadow: 0 -3px 18px -2px rgba(6, 182, 212, 0.28);
+    }
+    .card-accent-emerald {
+      border-top: 2px solid #10b981 !important;
+      box-shadow: 0 -3px 18px -2px rgba(16, 185, 129, 0.28);
+    }
+    .card-accent-violet {
+      border-top: 2px solid #8b5cf6 !important;
+      box-shadow: 0 -3px 18px -2px rgba(139, 92, 246, 0.28);
+    }
+    .card-accent-amber {
+      border-top: 2px solid #f59e0b !important;
+      box-shadow: 0 -3px 18px -2px rgba(245, 158, 11, 0.28);
+    }
+
+    /* Action Buttons Hover Lift & Glow */
+    .action-btn-pill {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .action-btn-pill:hover {
+      transform: translateY(-2px);
+    }
+    .action-btn-pill:active {
+      transform: translateY(0);
+    }
+
+    /* Table Sticky Header */
+    .sticky-table-container {
+      max-height: 440px;
+      overflow-y: auto;
+    }
+    .sticky-table-header th {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #090f1d;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    /* Pulse Dot Animation */
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .pulse-indicator {
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500/30 selection:text-cyan-200">
+  <!-- Sticky Enterprise Top Command Header -->
+  <header class="sticky top-0 z-30 border-b border-slate-800/90 bg-[#060913]/90 backdrop-blur-xl shadow-lg shadow-black/40">
+    <div class="max-w-[1600px] w-[96%] mx-auto py-3 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & System Metadata (Left) -->
+      <div class="flex items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 shadow-md shadow-cyan-500/10">
+          <i data-lucide="layers" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2.5">
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+              <span>DevCompany Command Center</span>
+            </h1>
+            <span id="provision-badge" class="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-full bg-slate-800 text-slate-300 border border-slate-700/80 inline-flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              <span>Checking...</span>
+            </span>
+          </div>
+          <p id="host-meta" class="text-xs text-slate-400 font-mono mt-0.5 flex items-center gap-2">
+            <span>host: connecting...</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- One-Click Live Action Buttons (Right) -->
+      <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
+        <button onclick="triggerAction('backup')" class="action-btn action-btn-pill inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20 hover:border-emerald-400/60 hover:shadow-lg hover:shadow-emerald-500/10 transition">
+          <i data-lucide="archive" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Run Backup Now</span>
+        </button>
+
+        <button onclick="triggerAction('cleanup')" class="action-btn action-btn-pill inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30 hover:bg-amber-500/20 hover:border-amber-400/60 hover:shadow-lg hover:shadow-amber-500/10 transition">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>Run Cleanup Now</span>
+        </button>
+
+        <button onclick="triggerAction('extend_lvm')" class="action-btn action-btn-pill inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/20 hover:border-cyan-400/60 hover:shadow-lg hover:shadow-cyan-500/10 transition">
+          <i data-lucide="hard-drive" class="w-3.5 h-3.5 text-cyan-400"></i>
+          <span>Expand LVM (+200MB)</span>
+        </button>
+
+        <button onclick="triggerAction('verify')" class="action-btn action-btn-pill inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/20 hover:border-indigo-400/60 hover:shadow-lg hover:shadow-indigo-500/10 transition">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-indigo-400"></i>
+          <span>Run Full System Audit</span>
+        </button>
+
+        <button onclick="toggleConsole(true)" class="action-btn-pill inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800/90 text-slate-200 border border-slate-700 hover:bg-slate-700 hover:border-slate-600 transition" title="Toggle Live Console">
+          <i data-lucide="terminal" class="w-3.5 h-3.5 text-slate-400"></i>
+          <span>Console</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Canvas -->
+  <main class="flex-1 max-w-[1600px] w-[96%] mx-auto py-6 space-y-6 pb-28">
+    
+    <!-- Dynamic Alert Banner -->
+    <div id="alert-banner" class="hidden rounded-xl border border-rose-500/40 bg-rose-950/40 px-4 py-3 text-sm text-rose-200 flex items-start gap-3 shadow-lg shadow-rose-950/30">
+      <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+      <div id="alert-banner-text" class="space-y-1"></div>
+    </div>
+
+    <!-- Unprovisioned Setup Guidance Banner -->
+    <div id="setup-banner" class="hidden rounded-xl border border-amber-500/30 bg-amber-950/30 px-4 py-3 text-xs sm:text-sm text-amber-200 flex items-center justify-between gap-4 shadow-lg shadow-amber-950/30">
+      <div class="flex items-center gap-2.5">
+        <i data-lucide="info" class="w-4 h-4 text-amber-400 shrink-0"></i>
+        <span>Linux infrastructure not yet provisioned on this host. Run <code class="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-amber-300 font-mono">sudo bash scripts/00_master_setup.sh</code> in Ubuntu/WSL2 to create all 40 accounts, LVM volumes, and repositories.</span>
+      </div>
+    </div>
+
+    <!-- 1. Top Telemetry KPI Cards -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      
+      <!-- KPI 1: CPU UTILIZATION -->
+      <div class="glass-panel card-accent-cyan rounded-2xl p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-700">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-semibold tracking-wider">
+          <span class="uppercase">CPU Utilization</span>
+          <div class="w-7 h-7 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between">
+          <span id="kpi-cpu" class="text-[2.2rem] font-bold text-white font-mono tracking-tight leading-none">0.0%</span>
+          <span id="kpi-load" class="text-xs text-cyan-300/80 font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">load: 0.00</span>
+        </div>
+        <div class="mt-4 h-2 w-full rounded-full bg-slate-800/80 overflow-hidden p-0.5 border border-slate-700/40">
+          <div id="kpi-cpu-bar" class="h-full bg-cyan-400 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(6,182,212,0.6)]" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- KPI 2: MEMORY USAGE -->
+      <div class="glass-panel card-accent-emerald rounded-2xl p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-700">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-semibold tracking-wider">
+          <span class="uppercase">Memory Usage</span>
+          <div class="w-7 h-7 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <i data-lucide="memory-stick" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between">
+          <span id="kpi-ram" class="text-[2.2rem] font-bold text-white font-mono tracking-tight leading-none">0.0%</span>
+          <span id="kpi-ram-detail" class="text-xs text-emerald-300/80 font-mono px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">0 / 0 MB</span>
+        </div>
+        <div class="mt-4 h-2 w-full rounded-full bg-slate-800/80 overflow-hidden p-0.5 border border-slate-700/40">
+          <div id="kpi-ram-bar" class="h-full bg-emerald-400 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(16,185,129,0.6)]" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- KPI 3: DEVELOPER SESSIONS -->
+      <div class="glass-panel card-accent-violet rounded-2xl p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-700">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-semibold tracking-wider">
+          <span class="uppercase">Developer Sessions</span>
+          <div class="w-7 h-7 rounded-lg bg-violet-500/15 border border-violet-500/30 flex items-center justify-center text-violet-400">
+            <i data-lucide="users" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between">
+          <span id="kpi-online" class="text-[2.2rem] font-bold text-white font-mono tracking-tight leading-none">0</span>
+          <span id="kpi-total-devs" class="text-xs text-violet-300 font-mono px-2 py-0.5 rounded bg-violet-500/10 border border-violet-500/20">40 provisioned</span>
+        </div>
+        <p id="kpi-ssh-summary" class="mt-4 text-xs text-slate-400 truncate font-mono flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+          <span>Active SSH sessions: 0</span>
+        </p>
+      </div>
+
+      <!-- KPI 4: CORE DAEMONS & UPTIME -->
+      <div class="glass-panel card-accent-amber rounded-2xl p-5 relative overflow-hidden transition-all duration-200 hover:border-slate-700">
+        <div class="flex items-center justify-between text-slate-400 text-xs font-semibold tracking-wider">
+          <span class="uppercase">Daemons &amp; Uptime</span>
+          <div class="flex items-center gap-1.5">
+            <span id="poll-indicator" class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-mono px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-indicator"></span>
+              <span>LIVE 3s</span>
+            </span>
+          </div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between">
+          <span id="kpi-uptime" class="text-2xl font-bold text-white font-mono tracking-tight leading-none">--</span>
+        </div>
+        <div id="service-pills" class="mt-3.5 flex flex-wrap gap-1.5 text-[11px] font-mono"></div>
+      </div>
+    </section>
+
+    <!-- 2. Middle Section: Telemetry Chart (7 cols) + LVM & Top Processes (5 cols) -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      
+      <!-- Chart Card -->
+      <div class="lg:col-span-7 glass-panel rounded-2xl p-5 flex flex-col justify-between shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-sm font-bold text-white tracking-wide flex items-center gap-2">
+              <i data-lucide="activity" class="w-4 h-4 text-cyan-400"></i>
+              <span>Real-Time CPU &amp; Memory Telemetry</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Kernel `/proc/stat` &amp; `/proc/meminfo` sampled continuously every 3s</p>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-3 text-xs font-mono">
+              <span class="flex items-center gap-1.5 text-cyan-300">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]"></span> CPU %
+              </span>
+              <span class="flex items-center gap-1.5 text-emerald-300">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]"></span> RAM %
+              </span>
+            </div>
+
+            <button onclick="triggerAction('monitor')" class="action-btn-pill text-xs text-cyan-300 bg-cyan-500/10 border border-cyan-500/30 hover:bg-cyan-500/20 px-2.5 py-1.5 rounded-lg font-medium inline-flex items-center gap-1.5 shadow-sm transition">
+              <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+              <span>Write Snapshot</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="relative h-64 sm:h-72 w-full pt-2">
+          <canvas id="telemetryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- LVM Storage & Top Processes Card -->
+      <div class="lg:col-span-5 glass-panel rounded-2xl p-5 flex flex-col justify-between shadow-xl space-y-5">
+        <div>
+          <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
+            <div>
+              <h2 class="text-sm font-bold text-white flex items-center gap-2">
+                <i data-lucide="hard-drive" class="w-4 h-4 text-cyan-400"></i>
+                <span>LVM Storage Volumes</span>
+              </h2>
+              <p class="text-xs text-slate-400 mt-0.5">Volume Group: <span class="text-cyan-300 font-mono">vg_devcompany</span> (ext4 by UUID)</p>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+              RESIZABLE
+            </span>
+          </div>
+
+          <div id="lvm-volumes" class="space-y-3"></div>
+        </div>
+
+        <!-- Top Processes Sub-Panel -->
+        <div class="pt-3 border-t border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="cpu" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span>Top Running Processes</span>
+            </h3>
+            <span class="text-[10px] text-slate-500 font-mono">by CPU%</span>
+          </div>
+          <div id="top-processes" class="space-y-1.5 text-xs font-mono"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Bottom Tabs: 40-Developer RBAC Matrix, Repos, Backups, Logs -->
+    <section class="glass-panel rounded-2xl border border-slate-800/80 overflow-hidden shadow-2xl">
+      
+      <!-- Segmented Control Tab Header -->
+      <div class="border-b border-slate-800 px-4 sm:px-6 pt-3 flex flex-wrap items-center justify-between gap-3 bg-slate-900/60">
+        <nav class="flex flex-wrap gap-2 sm:gap-4" aria-label="Dashboard sections">
+          <button data-tab="developers" onclick="switchTab('developers')" class="tab-btn px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 border-cyan-400 text-cyan-300 flex items-center gap-2 transition">
+            <i data-lucide="users" class="w-4 h-4"></i>
+            <span>40-Developer RBAC Matrix</span>
+            <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-cyan-500/20 text-cyan-200">40</span>
+          </button>
+          <button data-tab="repos" onclick="switchTab('repos')" class="tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition">
+            <i data-lucide="git-branch" class="w-4 h-4"></i>
+            <span>Shared Repos &amp; ACLs</span>
+            <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-slate-800 text-slate-400">4</span>
+          </button>
+          <button data-tab="backups" onclick="switchTab('backups')" class="tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition">
+            <i data-lucide="calendar-clock" class="w-4 h-4"></i>
+            <span>Backups &amp; Cron Jobs</span>
+          </button>
+          <button data-tab="logs" onclick="switchTab('logs')" class="tab-btn px-4 py-2.5 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            <span>Health &amp; Audit Logs</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- TAB 1: Developers Matrix -->
+      <div id="tab-developers" class="tab-panel p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          
+          <!-- Team Filter Buttons -->
+          <div id="team-filters" class="flex flex-wrap gap-1.5">
+            <button onclick="setTeamFilter('')" data-team="" class="team-pill px-3.5 py-1.5 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm transition">All (40)</button>
+            <button onclick="setTeamFilter('frontend')" data-team="frontend" class="team-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700 transition">Frontend (12)</button>
+            <button onclick="setTeamFilter('backend')" data-team="backend" class="team-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700 transition">Backend (14)</button>
+            <button onclick="setTeamFilter('devops')" data-team="devops" class="team-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700 transition">DevOps (8)</button>
+            <button onclick="setTeamFilter('techleads')" data-team="techleads" class="team-pill px-3.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700 transition">Tech Leads (6)</button>
+          </div>
+
+          <!-- Real-Time Search -->
+          <div class="relative w-full sm:w-72">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5"></i>
+            <input id="dev-search" type="text" oninput="loadDevelopers()" placeholder="Filter by dev01..dev40 or role..." class="w-full pl-10 pr-3.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition" />
+          </div>
+        </div>
+
+        <!-- Sticky Scrollable Table Container -->
+        <div class="rounded-xl border border-slate-800 overflow-hidden sticky-table-container shadow-inner">
+          <table class="min-w-full text-left text-xs">
+            <thead class="sticky-table-header uppercase tracking-wider text-slate-400 font-semibold text-[11px]">
+              <tr>
+                <th class="px-4 py-3">Developer</th>
+                <th class="px-4 py-3">Team Group</th>
+                <th class="px-4 py-3">UID / Shell</th>
+                <th class="px-4 py-3">Password Aging</th>
+                <th class="px-4 py-3">SSH Key</th>
+                <th class="px-4 py-3">Sudo RBAC Policy</th>
+              </tr>
+            </thead>
+            <tbody id="developers-tbody" class="divide-y divide-slate-800/70 font-mono"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: Shared Repos & ACLs -->
+      <div id="tab-repos" class="tab-panel hidden p-5">
+        <div id="repos-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- TAB 3: Backups & Cron -->
+      <div id="tab-backups" class="tab-panel hidden p-5 space-y-6">
+        <div>
+          <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i data-lucide="clock" class="w-4 h-4 text-cyan-400"></i>
+            <span>Active Cron Automation (/etc/cron.d/devcompany_automation)</span>
+          </h3>
+          <div id="cron-grid" class="grid grid-cols-1 md:grid-cols-3 gap-3.5"></div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+            <span>Verified Backup Archives (/srv/dev_backups)</span>
+          </h3>
+          <div class="overflow-x-auto rounded-xl border border-slate-800">
+            <table class="min-w-full text-left text-xs">
+              <thead class="bg-slate-900/90 text-slate-400 uppercase tracking-wider font-semibold">
+                <tr>
+                  <th class="px-4 py-3">Archive Filename</th>
+                  <th class="px-4 py-3">Size</th>
+                  <th class="px-4 py-3">Created</th>
+                  <th class="px-4 py-3">SHA-256 Digest</th>
+                  <th class="px-4 py-3">Integrity</th>
+                </tr>
+              </thead>
+              <tbody id="backups-tbody" class="divide-y divide-slate-800/80 font-mono"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 4: Logs -->
+      <div id="tab-logs" class="tab-panel hidden p-5">
+        <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+          <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i>
+          <span>Recent System &amp; Maintenance Log Entries</span>
+        </h3>
+        <pre id="recent-logs-box" class="rounded-xl bg-[#040711] border border-slate-800/90 p-4 text-xs text-slate-300 overflow-x-auto leading-relaxed font-mono min-h-[220px] shadow-inner">Waiting for log data...</pre>
+      </div>
+    </section>
+  </main>
+
+  <!-- Slide-Up Floating Linux/macOS Action Console Drawer -->
+  <div id="console-drawer" class="fixed bottom-0 inset-x-0 z-40 translate-y-full transition-transform duration-300 ease-out border-t border-cyan-500/40 bg-[#050813]/98 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+    <div class="max-w-[1600px] w-[96%] mx-auto px-4 sm:px-6 py-3">
+      
+      <!-- Terminal Window Bar -->
+      <div class="flex items-center justify-between gap-4 pb-2.5 border-b border-slate-800/90">
+        <div class="flex items-center gap-3">
+          <!-- macOS / Linux window buttons -->
+          <div class="flex items-center gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+          </div>
+          <span class="text-slate-600 font-mono">|</span>
+          <span id="console-title" class="text-xs font-bold text-white font-mono flex items-center gap-2">
+            <span class="text-cyan-400">&gt;_</span>
+            <span>Live Action Console</span>
+          </span>
+          <span id="console-status" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700">IDLE</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="clearConsole()" class="px-2.5 py-1 text-xs text-slate-300 hover:text-white rounded-md bg-slate-800/80 hover:bg-slate-700 border border-slate-700 transition">Clear</button>
+          <button onclick="toggleConsole(false)" class="px-2.5 py-1 text-xs text-slate-300 hover:text-white rounded-md bg-slate-800/80 hover:bg-slate-700 border border-slate-700 transition">Close</button>
+        </div>
+      </div>
+
+      <!-- Terminal Output Canvas -->
+      <pre id="console-output" class="mt-2.5 h-64 overflow-y-auto text-xs font-mono text-emerald-400 bg-[#03060e] rounded-xl p-3.5 leading-relaxed border border-slate-800/80 shadow-inner">Click any action button above to stream real Linux backend script execution...</pre>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

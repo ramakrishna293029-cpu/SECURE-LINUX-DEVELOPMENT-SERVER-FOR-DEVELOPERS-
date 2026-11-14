@@ -1,0 +1,18 @@
+[Unit]
+Description=DevCompany Linux Infrastructure Command Center Dashboard
+After=network-online.target local-fs.target devcompany-lvm-loop.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/devcompany/dashboard
+Environment="PATH=/opt/devcompany/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Environment="DEVCOMPANY_ROOT=/opt/devcompany"
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/opt/devcompany/venv/bin/uvicorn app:app --host 0.0.0.0 --port 8080
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
